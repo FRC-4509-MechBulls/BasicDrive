@@ -8,12 +8,10 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class DirectDriveCommand extends CommandBase {
 
-	// private DrivingSubsystem dSub = new DrivingSubsystem();
 	private final DrivingSubsystem dSub;
 
 	private final DoubleSupplier forward;
 	private final DoubleSupplier rotation;
-
 
 	public DirectDriveCommand(DrivingSubsystem subsystem, DoubleSupplier f, DoubleSupplier r) {
 		// Use addRequirements() here to declare subsystem dependencies.
@@ -27,6 +25,7 @@ public class DirectDriveCommand extends CommandBase {
 		// Make sure the controller is initialized before we try to use it.
 
 	}
+
 	@Override
 	public void execute() {
 		dSub.drive(forward.getAsDouble(), rotation.getAsDouble()); // Use input directly from the controller
