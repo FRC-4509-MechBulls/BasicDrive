@@ -8,17 +8,16 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class DirectDriveCommand extends CommandBase {
 
-	private final DrivingSubsystem dSub;
-
+	private final DrivingSubsystem drivingSubsystem;
 	private final DoubleSupplier left;
 	private final DoubleSupplier right;
 
 	public DirectDriveCommand(DrivingSubsystem subsystem, DoubleSupplier l, DoubleSupplier r) {
 		// Use addRequirements() here to declare subsystem dependencies.
-		dSub = subsystem;
+		drivingSubsystem = subsystem;
 		left = l;
 		right = r;
-		addRequirements(dSub);
+		addRequirements(drivingSubsystem);
 	}
 
 	public void initialize() {
@@ -28,7 +27,7 @@ public class DirectDriveCommand extends CommandBase {
 
 	@Override
 	public void execute() {
-		dSub.drive(left.getAsDouble(), right.getAsDouble()); // Use input directly from the controller
+		drivingSubsystem.drive(left.getAsDouble(), right.getAsDouble()); // Use input directly from the controller
 	}
 
 	public boolean isFinished() {
@@ -36,7 +35,7 @@ public class DirectDriveCommand extends CommandBase {
 	}
 
 	protected void end() {
-		dSub.stop();
+		drivingSubsystem.stop();
 	}
 
 }

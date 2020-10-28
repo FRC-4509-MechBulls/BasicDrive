@@ -111,36 +111,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
 
-    String gameData;
-    gameData = DriverStation.getInstance().getGameSpecificMessage();
-    if (gameData.length() > 0) {
-      switch (gameData.charAt(0)) {
-      case 'B':
-        // Blue case code
-        SmartDashboard.putString("Blue", "B");
-        break;
-      case 'G':
-        // Green case code
-        SmartDashboard.putString("Green", "G");
 
-        break;
-      case 'R':
-        // Red case code
-        SmartDashboard.putString("Red", "R");
-
-        break;
-      case 'Y':
-        // Yellow case code
-        SmartDashboard.putString("Yellow", "Y");
-
-        break;
-      default:
-        // This is corrupt data
-        break;
-      }
-    } else {
-      // Code for no data received yet
-    }
     CommandScheduler.getInstance().run();
 
   }

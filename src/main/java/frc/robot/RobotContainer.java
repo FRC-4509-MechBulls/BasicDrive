@@ -5,11 +5,9 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.DirectDriveCommand;
-// import frc.robot.commands.SetEncoderCommand;
-// import frc.robot.commands.TurnoffEncoderCommand;
+
 
 import frc.robot.subsystems.DrivingSubsystem;
-// import frc.robot.subsystems.EncoderSubsystem;
 
 public class RobotContainer {
 
@@ -41,8 +39,12 @@ public class RobotContainer {
 
 
 
-  private void configureButtonBindings() {
 
+  private void configureButtonBindings() {
+    //to use a button to do something with the robot, use the following:
+    //JoystickButton variableName = new JoystickButton(controller number, number of button for joysticks/XboxController.Button.kX.value and change the kX to the correct button );
+    //variableName.whenPressed(new Command(subsystem that it needs));
+    //variableName.whenReleased(new Command(subsystem that it needs)); //put the name of command you want when the button is pressed and released
   }
 
   /**
