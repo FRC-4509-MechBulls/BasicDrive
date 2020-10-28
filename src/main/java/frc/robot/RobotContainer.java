@@ -1,6 +1,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.DirectDriveCommand;
@@ -12,9 +13,10 @@ import frc.robot.subsystems.DrivingSubsystem;
 
 public class RobotContainer {
 
-  // public XboxController1 controller1;
-  XboxController controller2 = new XboxController(Constants.XBOX_CONTROLLER_2_PORT);
-  XboxController controller1 = new XboxController(Constants.XBOX_CONTROLLER_1_PORT);
+  // XboxController controller2 = new XboxController(Constants.XBOX_CONTROLLER_2_PORT);
+  // XboxController controller1 = new XboxController(Constants.XBOX_CONTROLLER_1_PORT);  
+  Joystick rightJoystick = new Joystick(0);
+  Joystick leftJoystick = new Joystick(1);
 
   DrivingSubsystem drivingSubsystem = new DrivingSubsystem();
 
@@ -22,24 +24,22 @@ public class RobotContainer {
   public RobotContainer() {
     configureButtonBindings();
 
-    drivingSubsystem.setDefaultCommand(new DirectDriveCommand(drivingSubsystem, () -> getDrive(), () -> getTurn()));
+    drivingSubsystem.setDefaultCommand(new DirectDriveCommand(drivingSubsystem, () -> getRight(), () -> getLeft()));
 
   }
 
-  public double getTurn() {
-    double n = controller1.getX(GenericHID.Hand.kLeft);
-    return Math.abs(n) < 0.1 ? 0 : n;
+  public double getRight() {
+    // controller1.getX(GenericHID.Hand.kLeft); For Xboxcontrollers
+    return rightJoystick.getY();
   }
 
-  public double getDrive() {
-    double n = controller1.getTriggerAxis(GenericHID.Hand.kRight) - controller1.getTriggerAxis(GenericHID.Hand.kLeft);
-    return Math.abs(n) < 0.1 ? 0 : n;
-  }
+  public double getLeft() {
+    // double n = controller1.getTriggerAxis(GenericHID.Hand.kRight) - controller1.getTriggerAxis(GenericHID.Hand.kLeft); For Xboxccontrollers
+    // return n; For Xboxcontrollers
+    return leftJoystick.getY();
+}
 
-  public double getArm() {
-    double n = controller2.getY(GenericHID.Hand.kRight);
-    return Math.abs(n) < 0.1 ? 0 : n;
-  }
+
 
   private void configureButtonBindings() {
 

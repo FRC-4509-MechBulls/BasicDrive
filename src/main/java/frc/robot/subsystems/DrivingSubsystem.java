@@ -29,21 +29,22 @@ public class DrivingSubsystem extends SubsystemBase {
 		// This method will be called once per scheduler run
 	}
 
-	public void drive(double ySpeed, double rotation) {
+	public void drive(double left, double right) {
 
-		if (Math.abs(ySpeed) > 1)
-			ySpeed = Math.abs(ySpeed) / ySpeed; // if the value given was too high, set it to the max
-		ySpeed *= baseDriveSpeed; // scale down the speed
+		if (Math.abs(left) > 1)
+			left = Math.abs(left) / left; // if the value given was too high, set it to the max
+		left *= baseDriveSpeed; // scale down the speed
 
-		if (Math.abs(rotation) > 1)
-			rotation = Math.abs(rotation) / rotation; // if the value given was too high, set it to the max
-		rotation *= baseDriveSpeed; // scale down the speed
+		if (Math.abs(right) > 1)
+			right = Math.abs(right) / right; // if the value given was too high, set it to the max
+		right *= baseDriveSpeed; // scale down the speed
 
-		drive.arcadeDrive(ySpeed, rotation); // function provided by the drivetrain. controls y and turn speed at the
+		drive.tankDrive(left, right); // function provided by the drivetrain. controls y and turn speed at the
 												// same time.
 	}
 
 	public static void initDrive() {
+		
 		leftFrontDriveTalon = new WPI_TalonSRX(Constants.LEFT_FRONT_DRIVE_TALON_PORT);
 		leftBackDriveTalon = new WPI_TalonSRX(Constants.LEFT_BACK_DRIVE_TALON_PORT);
 		rightFrontDriveTalon = new WPI_TalonSRX(Constants.RIGHT_FRONT_DRIVE_TALON_PORT);
