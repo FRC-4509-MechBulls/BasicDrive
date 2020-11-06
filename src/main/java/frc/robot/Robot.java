@@ -14,7 +14,9 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.AutoCommand;
 import frc.robot.subsystems.DrivingSubsystem;
 // import frc.robot.subsystems.EncoderSubsystem;
 
@@ -31,6 +33,7 @@ public class Robot extends TimedRobot {
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
   public static RobotContainer oi;
+  Command auto;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
   
 
@@ -40,6 +43,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    auto = new AutoCommand(drivingSubsystem); //initialize auto command
+    auto.initialize();
     Robot.oi = new RobotContainer();
 
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
@@ -83,7 +88,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     m_autoSelected = m_chooser.getSelected();
-    // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
+    m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
     System.out.println("Auto selected: " + m_autoSelected);
 
   }
@@ -93,7 +98,11 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
-
+    CommandScheduler.getInstance().run();
+    if (auto != null) auto.schedule();
+    if(auto.isFinished() == true){
+      auto.cancel();
+    }
     switch (m_autoSelected) {
     case kCustomAuto:
       // Put custom auto code here
@@ -105,6 +114,14 @@ public class Robot extends TimedRobot {
     }
   }
 
+  @Override
+  public void teleopInit() {
+
+    // TODO Auto-generated method stub
+    super.teleopInit();
+    auto.cancel(); //cancels autonomous in telop period
+    
+  }
   /**
    * This function is called periodically during operator control.
    */
